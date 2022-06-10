@@ -282,3 +282,29 @@ class MockStreamProductsTest extends _i1.Mock
               returnValue: Stream<List<_i5.ProductModel>>.empty())
           as _i2.Stream<List<_i5.ProductModel>>);
 }
+
+/// A class which mocks [ProductDatasourceTest].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockProductDatasourceTest extends _i1.Mock
+    implements _i3.ProductDatasourceTest {
+  MockProductDatasourceTest() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.Stream<List<_i5.ProductModel>> getProducts() =>
+      (super.noSuchMethod(Invocation.method(#getProducts, []),
+              returnValue: Stream<List<_i5.ProductModel>>.empty())
+          as _i2.Stream<List<_i5.ProductModel>>);
+  @override
+  _i2.Future<void> deleteProduct(String? id) =>
+      (super.noSuchMethod(Invocation.method(#deleteProduct, [id]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
+  @override
+  _i2.Future<void> updateProduct(_i5.ProductModel? product) =>
+      (super.noSuchMethod(Invocation.method(#updateProduct, [product]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
+}

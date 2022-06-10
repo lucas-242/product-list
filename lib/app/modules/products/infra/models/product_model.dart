@@ -17,6 +17,20 @@ class ProductModel extends Product {
     super.updatedAt,
   });
 
+  factory ProductModel.fromProduct(Product product) => ProductModel(
+        id: product.id,
+        title: product.title,
+        type: product.type,
+        description: product.description,
+        filename: product.filename,
+        height: product.height,
+        width: product.width,
+        price: product.price,
+        rating: product.rating,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+      );
+
   Map<String, dynamic> toMap() {
     return {
       'title': title,

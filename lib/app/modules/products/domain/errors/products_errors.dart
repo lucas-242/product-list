@@ -7,3 +7,10 @@ class InvalidProductFailure implements Failure {
   InvalidProductFailure({String? message})
       : message = message ?? 'Product is invalid';
 }
+
+class ProductFailure implements Failure {
+  @override
+  String message;
+
+  ProductFailure(this.message);
+}
