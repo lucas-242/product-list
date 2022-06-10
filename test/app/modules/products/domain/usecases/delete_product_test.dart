@@ -12,6 +12,6 @@ void main() {
     when(repository.deleteProduct(any))
         .thenAnswer((_) async => Future.delayed(const Duration(seconds: 1)));
 
-    expectLater(usecase.call('id'), completes);
+    expect(usecase.call('id'), completes);
   });
 }

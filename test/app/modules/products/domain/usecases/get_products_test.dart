@@ -18,6 +18,6 @@ void main() {
     when(repository.getProducts()).thenAnswer((_) => stream);
 
     var result = usecase.call();
-    expect(await result.first, isNotEmpty);
+    expectLater(await result.first, isNotEmpty);
   });
 }
