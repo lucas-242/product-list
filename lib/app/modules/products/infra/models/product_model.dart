@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 
 class ProductModel extends Product {
@@ -42,8 +41,8 @@ class ProductModel extends Product {
       'width': width,
       'price': price,
       'rating': rating,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'updatedAt': Timestamp.fromDate(updatedAt),
+      'createdAt': createdAt.millisecondsSinceEpoch,
+      'updatedAt': updatedAt.millisecondsSinceEpoch,
     };
   }
 

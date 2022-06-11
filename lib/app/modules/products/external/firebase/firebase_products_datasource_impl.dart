@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
+import 'package:product_list/app/modules/products/external/firebase/models/product_firebase_model.dart';
 import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
 
 class FirebaseProductsDatasource implements ProductsDatasource {
-  final String productsTable = 'proucts';
+  final String productsTable = 'products';
   final FirebaseFirestore _firestore;
 
   FirebaseProductsDatasource(this._firestore);
@@ -32,17 +33,18 @@ class FirebaseProductsDatasource implements ProductsDatasource {
 
   ProductModel _documentSnapshotToProductModel(DocumentSnapshot snapshot) {
     var data = snapshot.data() as Map<String, dynamic>;
-    var result = ProductModel.fromMap(data);
+    var result = ProductFirebaseModel.fromMap(data);
     return result.copyWith(id: snapshot.id);
   }
 
   @override
   Future<void> updateProduct(ProductModel product) async {
     try {
+      var toUpdate = ProductFirebaseModel.fromProductModel(product);
       await _firestore
           .collection(productsTable)
           .doc(product.id)
-          .update(product.toMap());
+          .update(toUpdate.toMap());
     } catch (e) {
       throw ProductsFailure('Error to update product in firebase');
     }
