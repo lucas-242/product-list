@@ -1,4 +1,6 @@
-class Product {
+import 'package:equatable/equatable.dart';
+
+class Product extends Equatable {
   final String id;
   final String title;
   final String type;
@@ -29,4 +31,19 @@ class Product {
   bool get isValidTitle => title.isNotEmpty;
   bool get isValidType => type.isNotEmpty;
   bool get isValidPrice => price > 0;
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        type,
+        description,
+        filename,
+        height,
+        width,
+        price,
+        rating,
+        createdAt,
+        updatedAt,
+      ];
 }

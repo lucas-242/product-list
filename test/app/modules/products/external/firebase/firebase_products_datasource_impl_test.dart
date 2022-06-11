@@ -33,4 +33,17 @@ void main() {
     var products = await datasource.getProducts().first;
     expect(products.map((e) => e.id), isNot(contains(productToDelete.id)));
   });
+
+  test('Should update product', () async {
+    var allProducts = await datasource.getProducts().first;
+    var productToUpdate =
+        allProducts.first.copyWith(title: 'new title test', price: 999);
+
+    await datasource.updateProduct(productToUpdate);
+
+    var products = await datasource.getProducts().first;
+    var productUpdated =
+        products.firstWhere((product) => product.id == productToUpdate.id);
+    expect(productUpdated, productToUpdate);
+  });
 }

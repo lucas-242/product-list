@@ -37,9 +37,15 @@ class FirebaseProductsDatasource implements ProductsDatasource {
   }
 
   @override
-  Future<void> updateProduct(ProductModel product) {
-    // TODO: implement updateProduct
-    throw UnimplementedError();
+  Future<void> updateProduct(ProductModel product) async {
+    try {
+      await _firestore
+          .collection(productsTable)
+          .doc(product.id)
+          .update(product.toMap());
+    } catch (e) {
+      throw ProductsFailure('Error to update product in firebase');
+    }
   }
 
   @override
@@ -50,4 +56,6 @@ class FirebaseProductsDatasource implements ProductsDatasource {
       throw ProductsFailure('Error to delete product from firebase');
     }
   }
+
+  // TODO: implement upload of images
 }
