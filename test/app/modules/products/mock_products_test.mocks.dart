@@ -25,12 +25,12 @@ import 'mock_products_test.dart' as _i3;
 class _FakeStreamSubscription_0<T> extends _i1.Fake
     implements _i2.StreamSubscription<T> {}
 
-/// A class which mocks [ProductRepositoryTest].
+/// A class which mocks [ProductsRepositoryTest].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockProductRepositoryTest extends _i1.Mock
-    implements _i3.ProductRepositoryTest {
-  MockProductRepositoryTest() {
+class MockProductsRepositoryTest extends _i1.Mock
+    implements _i3.ProductsRepositoryTest {
+  MockProductsRepositoryTest() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -283,12 +283,12 @@ class MockStreamProductsTest extends _i1.Mock
           as _i2.Stream<List<_i5.ProductModel>>);
 }
 
-/// A class which mocks [ProductDatasourceTest].
+/// A class which mocks [ProductsDatasourceTest].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockProductDatasourceTest extends _i1.Mock
-    implements _i3.ProductDatasourceTest {
-  MockProductDatasourceTest() {
+class MockProductsDatasourceTest extends _i1.Mock
+    implements _i3.ProductsDatasourceTest {
+  MockProductsDatasourceTest() {
     _i1.throwOnMissingStub(this);
   }
 

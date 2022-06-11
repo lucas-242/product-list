@@ -1,13 +1,13 @@
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
-import 'package:product_list/app/modules/products/domain/repositories/product_repository.dart';
-import 'package:product_list/app/modules/products/infra/datasources/product_datasource.dart';
+import 'package:product_list/app/modules/products/domain/repositories/products_repository.dart';
+import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
 
-class ProductRepositoryImpl implements ProductRepository {
-  final ProductDatasource datasource;
+class ProductsRepositoryImpl implements ProductsRepository {
+  final ProductsDatasource datasource;
 
-  ProductRepositoryImpl(this.datasource);
+  ProductsRepositoryImpl(this.datasource);
 
   @override
   Stream<List<Product>> getProducts() {

@@ -1,13 +1,13 @@
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
-import 'package:product_list/app/modules/products/domain/repositories/product_repository.dart';
-import 'package:product_list/app/modules/products/infra/datasources/product_datasource.dart';
+import 'package:product_list/app/modules/products/domain/repositories/products_repository.dart';
+import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
 
-class ProductRepositoryTest extends Mock implements ProductRepository {}
+class ProductsRepositoryTest extends Mock implements ProductsRepository {}
 
-class ProductDatasourceTest extends Mock implements ProductDatasource {}
+class ProductsDatasourceTest extends Mock implements ProductsDatasource {}
 
 class StreamProductsTest extends Mock implements Stream<List<ProductModel>> {}
 
@@ -39,8 +39,8 @@ List<ProductModel> get productList =>
     List<ProductModel>.generate(10, (index) => productModel);
 
 @GenerateMocks([
-  ProductRepositoryTest,
+  ProductsRepositoryTest,
   StreamProductsTest,
-  ProductDatasourceTest,
+  ProductsDatasourceTest,
 ])
 void main() {}

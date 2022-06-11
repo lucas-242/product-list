@@ -1,13 +1,13 @@
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
-import 'package:product_list/app/modules/products/domain/repositories/product_repository.dart';
+import 'package:product_list/app/modules/products/domain/repositories/products_repository.dart';
 
 abstract class UpdateProduct {
   void call(Product product);
 }
 
 class UpdateProductImpl implements UpdateProduct {
-  final ProductRepository repository;
+  final ProductsRepository repository;
 
   UpdateProductImpl(this.repository);
 
@@ -27,7 +27,7 @@ class UpdateProductImpl implements UpdateProduct {
   }
 
   Future<void> _updateProduct(
-      ProductRepository repository, Product product) async {
+      ProductsRepository repository, Product product) async {
     await repository.updateProduct(product);
   }
 }

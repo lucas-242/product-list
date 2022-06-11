@@ -6,7 +6,7 @@ import '../../mock_products_test.dart';
 import '../../mock_products_test.mocks.dart';
 
 void main() {
-  final repository = MockProductRepositoryTest();
+  final repository = MockProductsRepositoryTest();
   final usecase = GetProductsImpl(repository);
 
   var products = productList;
