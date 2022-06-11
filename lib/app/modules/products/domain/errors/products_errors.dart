@@ -8,9 +8,9 @@ class InvalidProductFailure implements Failure {
       : message = message ?? 'Product is invalid';
 }
 
-class ProductFailure implements Failure {
+class ProductsFailure implements Failure {
   @override
   String message;
 
-  ProductFailure(this.message);
+  ProductsFailure(this.message);
 }

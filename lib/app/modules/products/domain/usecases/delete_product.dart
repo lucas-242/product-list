@@ -1,11 +1,11 @@
-import 'package:product_list/app/modules/products/domain/repositories/product_repository.dart';
+import 'package:product_list/app/modules/products/domain/repositories/products_repository.dart';
 
 abstract class DeleteProduct {
   void call(String id);
 }
 
 class DeleteProductImpl implements DeleteProduct {
-  final ProductRepository repository;
+  final ProductsRepository repository;
 
   DeleteProductImpl(this.repository);
 

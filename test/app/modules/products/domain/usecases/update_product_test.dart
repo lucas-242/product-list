@@ -8,7 +8,7 @@ import '../../mock_products_test.dart';
 import '../../mock_products_test.mocks.dart';
 
 void main() {
-  final repository = MockProductRepositoryTest();
+  final repository = MockProductsRepositoryTest();
   final usecase = UpdateProductImpl(repository);
 
   var invalidProduct = Product(

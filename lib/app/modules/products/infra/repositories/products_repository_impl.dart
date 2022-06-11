@@ -1,20 +1,20 @@
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
-import 'package:product_list/app/modules/products/domain/repositories/product_repository.dart';
-import 'package:product_list/app/modules/products/infra/datasources/product_datasource.dart';
+import 'package:product_list/app/modules/products/domain/repositories/products_repository.dart';
+import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
 
-class ProductRepositoryImpl implements ProductRepository {
-  final ProductDatasource datasource;
+class ProductsRepositoryImpl implements ProductsRepository {
+  final ProductsDatasource datasource;
 
-  ProductRepositoryImpl(this.datasource);
+  ProductsRepositoryImpl(this.datasource);
 
   @override
   Stream<List<Product>> getProducts() {
     try {
       return datasource.getProducts();
     } catch (e) {
-      throw ProductFailure('Error to get products');
+      throw ProductsFailure('Error to get products');
     }
   }
 
@@ -24,7 +24,7 @@ class ProductRepositoryImpl implements ProductRepository {
       var toUpdate = ProductModel.fromProduct(product);
       return datasource.updateProduct(toUpdate);
     } catch (e) {
-      throw ProductFailure('Error to update product');
+      throw ProductsFailure('Error to update product');
     }
   }
 
@@ -33,7 +33,7 @@ class ProductRepositoryImpl implements ProductRepository {
     try {
       return datasource.deleteProduct(id);
     } catch (e) {
-      throw ProductFailure('Error to delete product');
+      throw ProductsFailure('Error to delete product');
     }
   }
 }

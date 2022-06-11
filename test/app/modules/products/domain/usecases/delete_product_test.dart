@@ -5,7 +5,7 @@ import 'package:product_list/app/modules/products/domain/usecases/delete_product
 import '../../mock_products_test.mocks.dart';
 
 void main() {
-  final repository = MockProductRepositoryTest();
+  final repository = MockProductsRepositoryTest();
   final usecase = DeleteProductImpl(repository);
 
   test('should delete product', () async {

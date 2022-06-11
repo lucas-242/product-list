@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:product_list/app/modules/products/infra/repositories/product_repository_impl.dart';
+import 'package:product_list/app/modules/products/infra/repositories/products_repository_impl.dart';
 
 import '../../mock_products_test.dart';
 import '../../mock_products_test.mocks.dart';
 
 void main() {
-  final datasource = MockProductDatasourceTest();
-  final repository = ProductRepositoryImpl(datasource);
+  final datasource = MockProductsDatasourceTest();
+  final repository = ProductsRepositoryImpl(datasource);
 
   test('Should get products', () async {
     var products = productList;
