@@ -17,7 +17,7 @@ class FirebaseProductsDatasource implements ProductsDatasource {
       var result = _querySnapshotToProductModel(snapshots);
       return result;
     } catch (e) {
-      throw ProductsFailure('Erro to get data from firebase');
+      throw ProductsFailure('Error to get products from firebase');
     }
   }
 
@@ -43,8 +43,11 @@ class FirebaseProductsDatasource implements ProductsDatasource {
   }
 
   @override
-  Future<void> deleteProduct(String id) {
-    // TODO: implement deleteProduct
-    throw UnimplementedError();
+  Future<void> deleteProduct(String id) async {
+    try {
+      await _firestore.collection(productsTable).doc(id).delete();
+    } catch (e) {
+      throw ProductsFailure('Error to delete product from firebase');
+    }
   }
 }

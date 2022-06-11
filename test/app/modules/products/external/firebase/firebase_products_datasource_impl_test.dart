@@ -18,11 +18,19 @@ void main() {
     await _generateProductsMock();
   });
 
-  test('Should listen all ShoppingLists', () async {
+  test('Should get products', () async {
     var result = datasource.getProducts();
     result.listen((data) {
       expect(data, isNotEmpty);
       expect(data.every((element) => element.id.isNotEmpty), true);
     });
+  });
+
+  test('Should delete product', () async {
+    var allProducts = await datasource.getProducts().first;
+    var productToDelete = allProducts.first;
+    await datasource.deleteProduct(productToDelete.id);
+    var products = await datasource.getProducts().first;
+    expect(products.map((e) => e.id), isNot(contains(productToDelete.id)));
   });
 }
