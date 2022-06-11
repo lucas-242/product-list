@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
+import 'package:product_list/app/modules/products/external/firebase/constants/firebase_constants.dart';
 import 'package:product_list/app/modules/products/external/firebase/models/product_firebase_model.dart';
 import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
 
 class FirebaseProductsDatasource implements ProductsDatasource {
-  final String productsTable = 'products';
   final FirebaseFirestore _firestore;
 
   FirebaseProductsDatasource(this._firestore);
@@ -14,7 +14,7 @@ class FirebaseProductsDatasource implements ProductsDatasource {
   Stream<List<ProductModel>> getProducts() {
     try {
       Stream<QuerySnapshot> snapshots =
-          _firestore.collection(productsTable).snapshots();
+          _firestore.collection(FirebaseConstants.productsTable).snapshots();
       var result = _querySnapshotToProductModel(snapshots);
       return result;
     } catch (e) {
@@ -42,7 +42,7 @@ class FirebaseProductsDatasource implements ProductsDatasource {
     try {
       var toUpdate = ProductFirebaseModel.fromProductModel(product);
       await _firestore
-          .collection(productsTable)
+          .collection(FirebaseConstants.productsTable)
           .doc(product.id)
           .update(toUpdate.toMap());
     } catch (e) {
@@ -53,7 +53,10 @@ class FirebaseProductsDatasource implements ProductsDatasource {
   @override
   Future<void> deleteProduct(String id) async {
     try {
-      await _firestore.collection(productsTable).doc(id).delete();
+      await _firestore
+          .collection(FirebaseConstants.productsTable)
+          .doc(id)
+          .delete();
     } catch (e) {
       throw ProductsFailure('Error to delete product from firebase');
     }

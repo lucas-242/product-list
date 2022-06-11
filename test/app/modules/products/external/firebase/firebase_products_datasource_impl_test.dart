@@ -1,5 +1,6 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:product_list/app/modules/products/external/firebase/constants/firebase_constants.dart';
 import 'package:product_list/app/modules/products/external/firebase/firebase_products_datasource_impl.dart';
 import 'package:product_list/app/modules/products/external/firebase/models/product_firebase_model.dart';
 
@@ -12,7 +13,7 @@ void main() {
   Future<void> _generateProductsMock() async {
     for (var product in productList) {
       await database
-          .collection(datasource.productsTable)
+          .collection(FirebaseConstants.productsTable)
           .add(ProductFirebaseModel.fromProductModel(product).toMap());
     }
   }

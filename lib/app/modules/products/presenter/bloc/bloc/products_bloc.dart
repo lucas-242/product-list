@@ -23,6 +23,9 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   Future<void> _getProducts(Emitter<ProductsState> emit) async {
     var stream = _getProductsUsecase();
     await emit.forEach(stream, onData: (List<Product> data) {
+      if (data.isEmpty) {
+        return const ErrorState('There is no data');
+      }
       return ListedState(products: data);
     });
   }
