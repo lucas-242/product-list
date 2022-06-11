@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 
 class ProductModel extends Product {
@@ -41,8 +42,8 @@ class ProductModel extends Product {
       'width': width,
       'price': price,
       'rating': rating,
-      'createdAt': createdAt.millisecondsSinceEpoch,
-      'updatedAt': updatedAt.millisecondsSinceEpoch,
+      'createdAt': Timestamp.fromDate(createdAt),
+      'updatedAt': Timestamp.fromDate(updatedAt),
     };
   }
 
@@ -66,4 +67,32 @@ class ProductModel extends Product {
 
   factory ProductModel.fromJson(String source) =>
       ProductModel.fromMap(json.decode(source));
+
+  ProductModel copyWith({
+    String? id,
+    String? title,
+    String? type,
+    String? description,
+    String? filename,
+    double? height,
+    double? width,
+    double? price,
+    double? rating,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      type: type ?? this.type,
+      description: description ?? this.description,
+      filename: filename ?? this.filename,
+      height: height ?? this.height,
+      width: width ?? this.width,
+      price: price ?? this.price,
+      rating: rating ?? this.rating,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

@@ -14,7 +14,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     try {
       return datasource.getProducts();
     } catch (e) {
-      throw ProductFailure('Error to get products');
+      throw ProductsFailure('Error to get products');
     }
   }
 
@@ -24,7 +24,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
       var toUpdate = ProductModel.fromProduct(product);
       return datasource.updateProduct(toUpdate);
     } catch (e) {
-      throw ProductFailure('Error to update product');
+      throw ProductsFailure('Error to update product');
     }
   }
 
@@ -33,7 +33,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     try {
       return datasource.deleteProduct(id);
     } catch (e) {
-      throw ProductFailure('Error to delete product');
+      throw ProductsFailure('Error to delete product');
     }
   }
 }

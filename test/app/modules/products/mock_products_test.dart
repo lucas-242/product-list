@@ -13,10 +13,14 @@ class StreamProductsTest extends Mock implements Stream<List<ProductModel>> {}
 
 Product get product => Product(
       id: 'test',
-      title: 'test',
-      type: 'test',
+      title: 'Avocado',
+      type: 'fruit',
       filename: 'test.png',
-      price: 25.12,
+      price: 8.7,
+      description: 'Test description',
+      height: 50,
+      width: 30,
+      rating: 4.7,
     );
 
 Product get invalidProduct => Product(
@@ -29,10 +33,14 @@ Product get invalidProduct => Product(
 
 ProductModel get productModel => ProductModel(
       id: 'test',
-      title: 'test',
-      type: 'test',
+      title: 'Avocado',
+      type: 'fruit',
       filename: 'test.png',
-      price: 25.12,
+      price: 8.7,
+      description: 'Test description',
+      height: 50,
+      width: 30,
+      rating: 4.7,
     );
 
 List<ProductModel> get productList =>
