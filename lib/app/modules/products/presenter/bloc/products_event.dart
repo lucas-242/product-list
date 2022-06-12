@@ -8,3 +8,11 @@ abstract class ProductsEvent extends Equatable {
 }
 
 class GetProductsEvent extends ProductsEvent {}
+
+class CreateProductsEvent extends ProductsEvent {}
+
+class DeleteProductEvent extends ProductsEvent {
+  final String id;
+
+  const DeleteProductEvent(this.id);
+}

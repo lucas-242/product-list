@@ -1,0 +1,1 @@
+enum ProductsOptions { update, delete }

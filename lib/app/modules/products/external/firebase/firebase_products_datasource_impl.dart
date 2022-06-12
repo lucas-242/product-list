@@ -62,5 +62,19 @@ class FirebaseProductsDatasource implements ProductsDatasource {
     }
   }
 
+  @override
+  Future<void> createProducts(List<ProductModel> products) async {
+    try {
+      for (var product in products) {
+        var toCreate = ProductFirebaseModel.fromProductModel(product);
+        await _firestore
+            .collection(FirebaseConstants.productsTable)
+            .add(toCreate.toMap());
+      }
+    } catch (e) {
+      throw ProductsFailure('Error to add products');
+    }
+  }
+
   // TODO: implement upload of images
 }
