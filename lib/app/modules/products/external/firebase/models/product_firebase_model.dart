@@ -43,8 +43,8 @@ class ProductFirebaseModel extends ProductModel {
       width: map['width']?.toDouble() ?? 0.0,
       price: map['price']?.toDouble() ?? 0.0,
       rating: map['rating']?.toDouble() ?? 0.0,
-      createdAt: map['createdAt'].toDate(),
-      updatedAt: map['updatedAt'].toDate(),
+      createdAt: map['createdAt']?.toDate(),
+      updatedAt: map['updatedAt']?.toDate(),
     );
   }
 

@@ -57,8 +57,12 @@ class ProductModel extends Product {
       width: map['width']?.toDouble() ?? 0.0,
       price: map['price']?.toDouble() ?? 0.0,
       rating: map['rating']?.toDouble() ?? 0.0,
-      createdAt: map['createdAt'].toDate(),
-      updatedAt: map['updatedAt'].toDate(),
+      createdAt: map['createdAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['createdAt'])
+          : null,
+      updatedAt: map['updatedAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['updatedAt'])
+          : null,
     );
   }
 

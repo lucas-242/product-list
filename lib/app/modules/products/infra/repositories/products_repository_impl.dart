@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
 import 'package:product_list/app/modules/products/domain/repositories/products_repository.dart';
@@ -35,5 +38,23 @@ class ProductsRepositoryImpl implements ProductsRepository {
     } catch (e) {
       throw ProductsFailure('Error to delete product');
     }
+  }
+
+  @override
+  Future<void> createProducts() async {
+    try {
+      final data = await _getProducts();
+      return datasource.createProducts(data);
+    } catch (e) {
+      throw ProductsFailure('Error to delete product');
+    }
+  }
+
+  Future<List<ProductModel>> _getProducts() async {
+    final String response =
+        await rootBundle.loadString('assets/data/data.json');
+    final data = await json.decode(response) as List;
+    final result = data.map((e) => ProductModel.fromMap(e)).toList();
+    return result;
   }
 }

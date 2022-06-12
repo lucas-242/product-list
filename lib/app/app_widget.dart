@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:product_list/app/modules/products/presenter/bloc/bloc/products_bloc.dart';
+import 'package:product_list/app/modules/products/presenter/bloc/products_bloc.dart';
 import 'package:product_list/app/modules/products/presenter/pages/products_page.dart';
 import 'package:product_list/app/injector_container.dart' as di;
 

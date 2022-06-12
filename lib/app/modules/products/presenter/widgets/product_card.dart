@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
+import 'package:product_list/app/modules/products/presenter/models/products_options.dart';
 import 'package:product_list/app/modules/products/presenter/widgets/image_selector.dart';
 import 'package:product_list/app/modules/products/presenter/widgets/stars_rating.dart';
 import 'package:product_list/app/shared/extensions/extensions.dart';
@@ -9,8 +10,18 @@ import 'package:product_list/app/shared/themes/typography_utils.dart';
 class ProductCard extends StatelessWidget {
   final Product product;
   final double height;
-  const ProductCard({Key? key, required this.product, this.height = 100})
-      : super(key: key);
+  final void Function(ProductsOptions?) onChanged;
+  ProductCard({
+    Key? key,
+    required this.product,
+    this.height = 110,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final List<ProductsOptions> items = [
+    ProductsOptions.update,
+    ProductsOptions.delete
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,28 +48,56 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                product.title,
-                                style: context.titleSmall,
-                              ),
-                              const IconButton(
-                                onPressed: null,
-                                icon: Icon(Icons.more_horiz_rounded),
-                              )
-                            ],
-                          ),
-                          Text(
-                            product.type.capitalize(),
-                            style: context.labelMedium,
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    product.title,
+                                    style: context.titleSmall!.copyWith(
+                                        overflow: TextOverflow.ellipsis),
+                                    maxLines: 2,
+                                    softWrap: true,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 60,
+                                  child: DropdownButton<ProductsOptions>(
+                                    alignment: AlignmentDirectional.center,
+                                    icon: const Icon(Icons.more_horiz_rounded),
+                                    isDense: true,
+                                    isExpanded: true,
+                                    underline: const SizedBox(),
+                                    items: items.map((ProductsOptions item) {
+                                      return DropdownMenuItem(
+                                        value: item,
+                                        child: Text(
+                                            item.toShortString().capitalize()),
+                                      );
+                                    }).toList(),
+                                    onChanged: onChanged,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              product.type.capitalize(),
+                              style: context.labelMedium,
+                            ),
+                            Text(
+                              DateFormat.yMd()
+                                  .add_Hm()
+                                  .format(product.createdAt),
+                              style: context.labelMedium,
+                            ),
+                          ],
+                        ),
                       ),
+                      const SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
