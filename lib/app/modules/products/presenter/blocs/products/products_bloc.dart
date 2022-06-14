@@ -11,14 +11,12 @@ part 'products_state.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final GetProducts _getProductsUsecase;
-  final DeleteProduct _updateProductUsecase;
   final DeleteProduct _deleteProductUsecase;
   final CreateProducts _createProductUsecase;
 
   ProductsBloc(
     this._getProductsUsecase,
     this._deleteProductUsecase,
-    this._updateProductUsecase,
     this._createProductUsecase,
   ) : super(const ListedState(products: [])) {
     on<GetProductsEvent>(_onInit);
@@ -37,6 +35,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       if (data.isEmpty) {
         return NoDataState();
       }
+      //TODO: Implement better way to show messages
       if (state.products.length > data.length) {
         return ListedState(
             products: data, message: 'Product deleted successfuly');
