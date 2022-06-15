@@ -1,6 +1,9 @@
 part of 'update_product_bloc.dart';
 
+enum UpdateProductStatus { success, error, update }
+
 class UpdateProductState extends Equatable {
+  final UpdateProductStatus status;
   final Product? initialProduct;
   final String title;
   final String description;
@@ -11,6 +14,7 @@ class UpdateProductState extends Equatable {
   final double height;
 
   const UpdateProductState({
+    this.status = UpdateProductStatus.update,
     this.initialProduct,
     this.title = '',
     this.description = '',
@@ -22,6 +26,8 @@ class UpdateProductState extends Equatable {
   });
 
   UpdateProductState copyWith({
+    Product? initialProduct,
+    UpdateProductStatus? status,
     String? title,
     String? type,
     String? description,
@@ -34,6 +40,8 @@ class UpdateProductState extends Equatable {
     DateTime? updatedAt,
   }) {
     return UpdateProductState(
+      initialProduct: initialProduct ?? this.initialProduct,
+      status: status ?? this.status,
       title: title ?? this.title,
       type: type ?? this.type,
       description: description ?? this.description,
@@ -46,6 +54,7 @@ class UpdateProductState extends Equatable {
 
   @override
   List<Object> get props => [
+        status,
         title,
         description,
         type,
@@ -55,5 +64,3 @@ class UpdateProductState extends Equatable {
         height,
       ];
 }
-
-class SucessUpdateProductState extends UpdateProductState {}

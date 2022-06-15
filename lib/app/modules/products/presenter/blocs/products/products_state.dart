@@ -32,6 +32,8 @@ class ListedState extends ProductsState {
 }
 
 class LoadingState extends ProductsState {
+  const LoadingState({required List<Product> products})
+      : super(products: products);
   @override
   T when<T>({
     T Function(ProductsState state)? onState,
@@ -44,7 +46,8 @@ class LoadingState extends ProductsState {
 }
 
 class ErrorState extends ProductsState {
-  const ErrorState(String? message) : super(message: message);
+  const ErrorState({required List<Product> products, String? message})
+      : super(products: products, message: message);
 
   @override
   T when<T>({
@@ -66,5 +69,20 @@ class NoDataState extends ProductsState {
     T Function()? onLoading,
   }) {
     return onNoData!();
+  }
+}
+
+class SuccessState extends ProductsState {
+  const SuccessState({required List<Product> products, String? message})
+      : super(products: products, message: message);
+
+  @override
+  T when<T>({
+    T Function(ProductsState state)? onState,
+    T Function(ErrorState error)? onError,
+    T Function()? onNoData,
+    T Function()? onLoading,
+  }) {
+    return onState!(this);
   }
 }

@@ -6,6 +6,7 @@ import 'package:product_list/app/modules/products/presenter/models/products_opti
 import 'package:product_list/app/modules/products/presenter/pages/product_update_page.dart';
 import 'package:product_list/app/modules/products/presenter/widgets/confirmation_dialog.dart';
 import 'package:product_list/app/modules/products/presenter/widgets/product_card.dart';
+import 'package:product_list/app/shared/themes/app_snackbar.dart';
 import 'package:product_list/app/shared/themes/typography_utils.dart';
 import 'package:product_list/app/shared/widgets/title/app_title.dart';
 
@@ -44,11 +45,16 @@ class _ProductsPageState extends State<ProductsPage> {
               ),
             ),
             BlocListener<ProductsBloc, ProductsState>(
-              listenWhen: (previous, current) => current is ListedState,
               listener: (context, state) {
                 if (bloc.state.message != null &&
                     bloc.state.message!.isNotEmpty) {
-                  _showErrorOnSnackbar(bloc.state.message!);
+                  getAppSnackBar(
+                    context: context,
+                    message: bloc.state.message!,
+                    type: state is ErrorState
+                        ? SnackBarType.error
+                        : SnackBarType.success,
+                  );
                 }
               },
               child: Container(),
@@ -115,21 +121,6 @@ class _ProductsPageState extends State<ProductsPage> {
     } else if (option != null && option == ProductsOptions.update) {
       _onUpdateOptionSelected(product);
     }
-  }
-
-  void _showErrorOnSnackbar(String message) {
-    Future.delayed(Duration.zero, () {
-      var colors = Theme.of(context).colorScheme;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            message,
-            style: TextStyle(color: colors.error),
-          ),
-          backgroundColor: colors.errorContainer,
-        ),
-      );
-    });
   }
 
   void _onDeleteOptionSelected(Bloc bloc, Product product) {
