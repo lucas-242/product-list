@@ -27,8 +27,6 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<ProductsBloc>();
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -36,29 +34,29 @@ class _ProductsPageState extends State<ProductsPage> {
           children: [
             const AppTitle(title: 'Products'),
             Expanded(
-              child: BlocBuilder<ProductsBloc, ProductsState>(
-                builder: (context, state) {
-                  if (bloc.state.message != null &&
-                      bloc.state.message!.isNotEmpty) {
-                    Future.delayed(Duration.zero).then((_) => {
-                          getAppSnackBar(
-                            context: context,
-                            message: bloc.state.message!,
-                            type: state is ErrorState
-                                ? SnackBarType.error
-                                : SnackBarType.success,
-                          )
-                        });
+              child: BlocListener<ProductsBloc, ProductsState>(
+                listener: (context, state) {
+                  if (state.message != null && state.message!.isNotEmpty) {
+                    getAppSnackBar(
+                      context: context,
+                      message: state.message!,
+                      type: state is ErrorState
+                          ? SnackBarType.error
+                          : SnackBarType.success,
+                    );
                   }
-
-                  return state.when(
-                    onState: (state) => _BuildList(),
-                    onError: (state) => _BuildError(),
-                    onNoData: () => _BuildNoData(),
-                    onLoading: () =>
-                        const Center(child: CircularProgressIndicator()),
-                  );
                 },
+                child: BlocBuilder<ProductsBloc, ProductsState>(
+                  builder: (context, state) {
+                    return state.when(
+                      onState: (state) => _BuildList(),
+                      onError: (state) => _BuildError(),
+                      onNoData: () => _BuildNoData(),
+                      onLoading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                    );
+                  },
+                ),
               ),
             ),
           ],
