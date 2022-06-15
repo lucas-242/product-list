@@ -36,49 +36,101 @@ class _ProductsPageState extends State<ProductsPage> {
           children: [
             const AppTitle(title: 'Products'),
             Expanded(
-              child: bloc.state.when(
-                onState: (state) => _buildList(context, bloc),
-                onError: (state) => _buildError(context, bloc),
-                onNoData: () => _buildNoData(context, bloc),
-                onLoading: () =>
-                    const Center(child: CircularProgressIndicator()),
-              ),
-            ),
-            BlocListener<ProductsBloc, ProductsState>(
-              listener: (context, state) {
-                if (bloc.state.message != null &&
-                    bloc.state.message!.isNotEmpty) {
-                  getAppSnackBar(
-                    context: context,
-                    message: bloc.state.message!,
-                    type: state is ErrorState
-                        ? SnackBarType.error
-                        : SnackBarType.success,
+              child: BlocBuilder<ProductsBloc, ProductsState>(
+                builder: (context, state) {
+                  if (bloc.state.message != null &&
+                      bloc.state.message!.isNotEmpty) {
+                    Future.delayed(Duration.zero).then((_) => {
+                          getAppSnackBar(
+                            context: context,
+                            message: bloc.state.message!,
+                            type: state is ErrorState
+                                ? SnackBarType.error
+                                : SnackBarType.success,
+                          )
+                        });
+                  }
+
+                  return state.when(
+                    onState: (state) => _BuildList(),
+                    onError: (state) => _BuildError(),
+                    onNoData: () => _BuildNoData(),
+                    onLoading: () =>
+                        const Center(child: CircularProgressIndicator()),
                   );
-                }
-              },
-              child: Container(),
+                },
+              ),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildList(BuildContext context, ProductsBloc bloc) {
+class _BuildList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.watch<ProductsBloc>();
+
     return ListView.builder(
       itemCount: bloc.state.products.length,
       itemBuilder: (context, index) {
         var product = bloc.state.products[index];
         return ProductCard(
             product: product,
-            onChanged: (option) =>
-                _onChangedProductCardOption(option, bloc, product));
+            onChanged: (option) => _onChangedProductCardOption(
+                  context: context,
+                  option: option,
+                  bloc: bloc,
+                  product: product,
+                ));
       },
     );
   }
 
-  Widget _buildError(BuildContext context, ProductsBloc bloc) {
+  void _onChangedProductCardOption(
+      {required BuildContext context,
+      ProductsOptions? option,
+      required ProductsBloc bloc,
+      required Product product}) {
+    if (option != null && option == ProductsOptions.delete) {
+      _onDeleteOptionSelected(context: context, bloc: bloc, product: product);
+    } else if (option != null && option == ProductsOptions.update) {
+      _onUpdateOptionSelected(context: context, product: product);
+    }
+  }
+
+  void _onDeleteOptionSelected(
+      {required BuildContext context,
+      required Bloc bloc,
+      required Product product}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ConfirmationDialog(
+          product: product,
+          onConfirm: () {
+            Navigator.of(context).pop();
+            bloc.add(DeleteProductEvent(product.id));
+          },
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
+  void _onUpdateOptionSelected(
+      {required BuildContext context, required Product product}) {
+    Navigator.of(context)
+        .push(ProductUpdatePage.route(initialProduct: product));
+  }
+}
+
+class _BuildError extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.watch<ProductsBloc>();
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -95,8 +147,12 @@ class _ProductsPageState extends State<ProductsPage> {
       ),
     );
   }
+}
 
-  Widget _buildNoData(BuildContext context, ProductsBloc bloc) {
+class _BuildNoData extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<ProductsBloc>();
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -112,35 +168,5 @@ class _ProductsPageState extends State<ProductsPage> {
         ],
       ),
     );
-  }
-
-  void _onChangedProductCardOption(
-      ProductsOptions? option, ProductsBloc bloc, Product product) {
-    if (option != null && option == ProductsOptions.delete) {
-      _onDeleteOptionSelected(bloc, product);
-    } else if (option != null && option == ProductsOptions.update) {
-      _onUpdateOptionSelected(product);
-    }
-  }
-
-  void _onDeleteOptionSelected(Bloc bloc, Product product) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return ConfirmationDialog(
-          product: product,
-          onConfirm: () {
-            Navigator.of(context).pop();
-            bloc.add(DeleteProductEvent(product.id));
-          },
-          onCancel: () => Navigator.of(context).pop(),
-        );
-      },
-    );
-  }
-
-  void _onUpdateOptionSelected(Product product) {
-    Navigator.of(context)
-        .push(ProductUpdatePage.route(initialProduct: product));
   }
 }
