@@ -11,14 +11,12 @@ part 'products_state.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final GetProducts _getProductsUsecase;
-  final DeleteProduct _updateProductUsecase;
   final DeleteProduct _deleteProductUsecase;
   final CreateProducts _createProductUsecase;
 
   ProductsBloc(
     this._getProductsUsecase,
     this._deleteProductUsecase,
-    this._updateProductUsecase,
     this._createProductUsecase,
   ) : super(const ListedState(products: [])) {
     on<GetProductsEvent>(_onInit);
@@ -27,7 +25,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   }
 
   void _onInit(GetProductsEvent event, Emitter<ProductsState> emit) async {
-    emit.call(LoadingState());
+    emit.call(LoadingState(products: state.products));
     await _getProducts(emit);
   }
 
@@ -36,31 +34,29 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     await emit.forEach(stream, onData: (List<Product> data) {
       if (data.isEmpty) {
         return NoDataState();
-      }
-      if (state.products.length > data.length) {
-        return ListedState(
-            products: data, message: 'Product deleted successfuly');
+      } else if (state.products.length > data.length) {
+        return SuccessState(
+            products: data, message: 'Product deleted successfully');
       }
       return ListedState(products: data);
     });
   }
 
   void _onDelete(DeleteProductEvent event, Emitter<ProductsState> emit) async {
-    var productsBackup = state.products;
-    emit.call(LoadingState());
-    await _deleteProduct(event, emit, productsBackup);
+    emit.call(LoadingState(products: state.products));
+    await _deleteProduct(event, emit);
   }
 
-  Future<void> _deleteProduct(DeleteProductEvent event,
-      Emitter<ProductsState> emit, List<Product> productsBackup) async {
+  Future<void> _deleteProduct(
+      DeleteProductEvent event, Emitter<ProductsState> emit) async {
     await _deleteProductUsecase(event.id).catchError(
       (error) => emit
-          .call(ListedState(products: productsBackup, message: error.message)),
+          .call(ErrorState(products: state.products, message: error.message)),
     );
   }
 
   void _onCreate(CreateProductsEvent event, Emitter<ProductsState> emit) async {
-    emit.call(LoadingState());
+    emit.call(LoadingState(products: state.products));
     await _createProducts(event, emit);
   }
 

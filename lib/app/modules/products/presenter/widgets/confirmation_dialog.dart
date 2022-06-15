@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
+import 'package:product_list/app/shared/widgets/elevated_button/app_elevated_button.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   final VoidCallback onCancel;
@@ -20,25 +21,17 @@ class ConfirmationDialog extends StatelessWidget {
       title: Text("Delete ${product.title}"),
       content: const Text("Would you like to delete this product?"),
       actions: [
-        ElevatedButton(
-          onPressed: onCancel,
-          style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all<Size>(const Size(100, 45)),
-            backgroundColor:
-                MaterialStateProperty.all<Color>(colors.background),
-            foregroundColor: MaterialStateProperty.all<Color>(colors.onSurface),
-          ),
-          child: const Text('Cancel'),
+        AppElevatedButton(
+          onTap: onCancel,
+          text: 'Cancel',
+          backgroundColor: colors.background,
+          foregroundColor: colors.onSurface,
         ),
-        ElevatedButton(
-          onPressed: onConfirm,
-          style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all<Size>(const Size(100, 45)),
-            backgroundColor:
-                MaterialStateProperty.all<Color>(colors.errorContainer),
-            foregroundColor: MaterialStateProperty.all<Color>(colors.error),
-          ),
-          child: const Text('Delete'),
+        AppElevatedButton(
+          onTap: onConfirm,
+          text: 'Delete',
+          backgroundColor: colors.errorContainer,
+          foregroundColor: colors.error,
         ),
       ],
     );

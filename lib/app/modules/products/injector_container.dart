@@ -7,7 +7,7 @@ import 'package:product_list/app/modules/products/domain/usecases/update_product
 import 'package:product_list/app/modules/products/external/firebase/firebase_products_datasource_impl.dart';
 import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/repositories/products_repository_impl.dart';
-import 'package:product_list/app/modules/products/presenter/bloc/products_bloc.dart';
+import 'package:product_list/app/modules/products/presenter/blocs/products/products_bloc.dart';
 
 final instance = GetIt.instance;
 
@@ -38,7 +38,6 @@ void _initUsecases() {
 
 void _initBlocs() {
   instance.registerFactory(() => ProductsBloc(
-        instance(),
         instance(),
         instance(),
         instance(),
