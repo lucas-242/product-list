@@ -20,7 +20,7 @@ Future<void> init() async {
 
 void _initDatasources() {
   instance.registerFactory<ProductsDatasource>(
-      () => FirebaseProductsDatasource(instance()));
+      () => FirebaseProductsDatasource(instance(), instance()));
 }
 
 void _initRepositories() {

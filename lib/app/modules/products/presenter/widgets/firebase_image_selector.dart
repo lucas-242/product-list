@@ -23,7 +23,7 @@ class FirebaseImageSelector extends StatelessWidget {
       child: image != null && image != ''
           ? Image(
               image: FirebaseImage(
-                FirebaseConstants.productsImageBucket + image!,
+                FirebaseConstants.productImagesBucket + image!,
               ),
               width: width,
               height: height,
