@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/presenter/blocs/update_product/update_product_bloc.dart';
 import 'package:product_list/app/modules/products/presenter/widgets/custom_text_form_field.dart';
-import 'package:product_list/app/modules/products/presenter/widgets/image_selector.dart';
+import 'package:product_list/app/modules/products/presenter/widgets/firebase_image_selector.dart';
 import 'package:product_list/app/shared/themes/app_snackbar.dart';
 import 'package:product_list/app/shared/widgets/elevated_button/app_elevated_button.dart';
 import 'package:product_list/app/shared/widgets/title/app_title.dart';
@@ -87,7 +87,7 @@ class _Form extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
-              child: ImageSelector(
+              child: FirebaseImageSelector(
                 image: null,
                 height: 140,
                 borderRadius: BorderRadius.circular(8.0),

@@ -1,19 +1,19 @@
+import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
+import 'package:product_list/app/modules/products/external/firebase/constants/firebase_constants.dart';
 import 'package:product_list/app/shared/themes/app_images.dart';
 
-class ImageSelector extends StatelessWidget {
+class FirebaseImageSelector extends StatelessWidget {
   final String? image;
   final double? height;
   final double? width;
   final BorderRadius? borderRadius;
-  final bool isNetworkImage;
-  const ImageSelector({
+  const FirebaseImageSelector({
     Key? key,
     required this.image,
     this.width,
     this.height,
     this.borderRadius,
-    this.isNetworkImage = true,
   }) : super(key: key);
 
   @override
@@ -21,18 +21,14 @@ class ImageSelector extends StatelessWidget {
     return ClipRRect(
       borderRadius: borderRadius ?? BorderRadius.zero,
       child: image != null && image != ''
-          ? isNetworkImage
-              ? Image.network(
-                  image!,
-                  width: width,
-                  height: height,
-                )
-              : Image.asset(
-                  image!,
-                  fit: BoxFit.cover,
-                  width: width,
-                  height: height,
-                )
+          ? Image(
+              image: FirebaseImage(
+                FirebaseConstants.productsImageBucket + image!,
+              ),
+              width: width,
+              height: height,
+              fit: BoxFit.fill,
+            )
           : Image.asset(
               AppImages.noImage,
               fit: BoxFit.fitHeight,
