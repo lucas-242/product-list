@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/presenter/models/products_options.dart';
-import 'package:product_list/app/modules/products/presenter/widgets/image_selector.dart';
+import 'package:product_list/app/modules/products/presenter/widgets/firebase_image_selector.dart';
 import 'package:product_list/app/modules/products/presenter/widgets/stars_rating.dart';
 import 'package:product_list/app/shared/extensions/extensions.dart';
 import 'package:product_list/app/shared/themes/typography_utils.dart';
@@ -33,8 +33,8 @@ class ProductCard extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            ImageSelector(
-              image: null,
+            FirebaseImageSelector(
+              image: product.filename,
               height: height,
               width: 120,
               borderRadius: BorderRadius.circular(8.0),

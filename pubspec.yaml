@@ -15,6 +15,7 @@ dependencies:
   equatable: ^2.0.3
   flutter_bloc: ^8.0.1
   firebase_core: ^1.17.1
+  firebase_image: ^1.1.1
   get_it: ^7.2.0
   google_fonts: ^3.0.1
   intl: ^0.17.0

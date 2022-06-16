@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/presenter/blocs/update_product/update_product_bloc.dart';
 import 'package:product_list/app/modules/products/presenter/widgets/custom_text_form_field.dart';
-import 'package:product_list/app/modules/products/presenter/widgets/image_selector.dart';
+import 'package:product_list/app/modules/products/presenter/widgets/firebase_image_selector.dart';
 import 'package:product_list/app/shared/themes/app_snackbar.dart';
 import 'package:product_list/app/shared/widgets/elevated_button/app_elevated_button.dart';
 import 'package:product_list/app/shared/widgets/title/app_title.dart';
@@ -79,6 +80,7 @@ class _Form extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<UpdateProductBloc>();
     return Form(
       key: formKey,
       child: Padding(
@@ -87,8 +89,8 @@ class _Form extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
-              child: ImageSelector(
-                image: null,
+              child: FirebaseImageSelector(
+                image: bloc.state.initialProduct?.filename,
                 height: 140,
                 borderRadius: BorderRadius.circular(8.0),
               ),
@@ -183,8 +185,9 @@ class _PriceField extends StatelessWidget {
       hintText: 'R\$0.00',
       initialValue: bloc.state.price.toString(),
       keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       onChanged: (value) => bloc.add(UpdateProductPriceEvent(value)),
-      validator: (value) => bloc.validateNumberField(value, fieldName: label),
+      validator: (value) => bloc.validatePriceField(value, fieldName: label),
     );
   }
 }
@@ -203,6 +206,7 @@ class _RatingField extends StatelessWidget {
       hintText: '0.0',
       initialValue: bloc.state.rating.toString(),
       keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       onChanged: (value) => context
           .read<UpdateProductBloc>()
           .add(UpdateProductRatingEvent(value)),
@@ -225,6 +229,7 @@ class _WidthField extends StatelessWidget {
       hintText: '0.0',
       initialValue: bloc.state.width.toString(),
       keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       onChanged: (value) => bloc.add(UpdateProductWidthEvent(value)),
       validator: (value) => bloc.validateNumberField(value, fieldName: label),
     );
@@ -246,6 +251,7 @@ class _HeightField extends StatelessWidget {
       initialValue: bloc.state.height.toString(),
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       onChanged: (value) => bloc.add(UpdateProductHeightEvent(value)),
       validator: (value) => bloc.validateNumberField(value, fieldName: label),
     );
