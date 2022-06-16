@@ -58,17 +58,20 @@ class UpdateProductBloc extends Bloc<UpdateProductEvent, UpdateProductState>
 
   void _onRatingChanged(
       UpdateProductRatingEvent event, Emitter<UpdateProductState> emit) {
-    emit(state.copyWith(rating: double.tryParse(event.rating)));
+    final value = double.tryParse(event.rating) ?? 0;
+    emit(state.copyWith(rating: value));
   }
 
   void _onWidthChanged(
       UpdateProductWidthEvent event, Emitter<UpdateProductState> emit) {
-    emit(state.copyWith(width: double.tryParse(event.width)));
+    final value = double.tryParse(event.width) ?? 0;
+    emit(state.copyWith(width: value));
   }
 
   void _onHeightChanged(
       UpdateProductHeightEvent event, Emitter<UpdateProductState> emit) {
-    emit(state.copyWith(height: double.tryParse(event.height)));
+    final value = double.tryParse(event.height) ?? 0;
+    emit(state.copyWith(height: value));
   }
 
   Future<void> _onSubmitted(UpdateProductSubmittedEvent event,

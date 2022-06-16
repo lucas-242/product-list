@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
@@ -79,6 +80,7 @@ class _Form extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<UpdateProductBloc>();
     return Form(
       key: formKey,
       child: Padding(
@@ -88,7 +90,7 @@ class _Form extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: FirebaseImageSelector(
-                image: null,
+                image: bloc.state.initialProduct?.filename,
                 height: 140,
                 borderRadius: BorderRadius.circular(8.0),
               ),
@@ -183,8 +185,9 @@ class _PriceField extends StatelessWidget {
       hintText: 'R\$0.00',
       initialValue: bloc.state.price.toString(),
       keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       onChanged: (value) => bloc.add(UpdateProductPriceEvent(value)),
-      validator: (value) => bloc.validateNumberField(value, fieldName: label),
+      validator: (value) => bloc.validatePriceField(value, fieldName: label),
     );
   }
 }
@@ -203,6 +206,7 @@ class _RatingField extends StatelessWidget {
       hintText: '0.0',
       initialValue: bloc.state.rating.toString(),
       keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       onChanged: (value) => context
           .read<UpdateProductBloc>()
           .add(UpdateProductRatingEvent(value)),
@@ -225,6 +229,7 @@ class _WidthField extends StatelessWidget {
       hintText: '0.0',
       initialValue: bloc.state.width.toString(),
       keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       onChanged: (value) => bloc.add(UpdateProductWidthEvent(value)),
       validator: (value) => bloc.validateNumberField(value, fieldName: label),
     );
@@ -246,6 +251,7 @@ class _HeightField extends StatelessWidget {
       initialValue: bloc.state.height.toString(),
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
       onChanged: (value) => bloc.add(UpdateProductHeightEvent(value)),
       validator: (value) => bloc.validateNumberField(value, fieldName: label),
     );
