@@ -15,7 +15,7 @@ class UpdateProductImpl implements UpdateProduct {
   Future<void> call(Product product) async {
     _validateProduct(product);
     //TODO: usecase should validate if the UI is changing the createdAt property
-    return await _updateProduct(repository, product);
+    return await _updateProduct(product);
   }
 
   void _validateProduct(Product product) {
@@ -27,8 +27,7 @@ class UpdateProductImpl implements UpdateProduct {
     }
   }
 
-  Future<void> _updateProduct(
-      ProductsRepository repository, Product product) async {
+  Future<void> _updateProduct(Product product) async {
     await repository.updateProduct(product);
   }
 }

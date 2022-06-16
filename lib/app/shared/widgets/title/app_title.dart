@@ -8,7 +8,7 @@ class AppTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+      padding: const EdgeInsets.only(left: 12.0, top: 12.0, bottom: 12),
       child: Text(
         title,
         style: context.headlineSmall!.copyWith(

@@ -1,11 +1,14 @@
-import 'dart:async';
+import 'dart:io';
 
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
+import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
 import 'package:product_list/app/modules/products/domain/usecases/update_product.dart';
+import 'package:product_list/app/modules/products/domain/usecases/upload_product_image.dart';
 import 'package:product_list/app/modules/products/presenter/blocs/update_product/product_validator_mixin.dart';
+import 'package:product_list/app/shared/extensions/extensions.dart';
 
 part 'update_product_event.dart';
 part 'update_product_state.dart';
@@ -13,8 +16,10 @@ part 'update_product_state.dart';
 class UpdateProductBloc extends Bloc<UpdateProductEvent, UpdateProductState>
     with ProductValidatorMixin {
   final UpdateProduct _updateProductUsecase;
+  final UploadProductImage _uploadProductImageUsecase;
   UpdateProductBloc(
     this._updateProductUsecase,
+    this._uploadProductImageUsecase,
     Product? initialProduct,
   ) : super(UpdateProductState(
           initialProduct: initialProduct,
@@ -33,6 +38,7 @@ class UpdateProductBloc extends Bloc<UpdateProductEvent, UpdateProductState>
     on<UpdateProductRatingEvent>(_onRatingChanged);
     on<UpdateProductWidthEvent>(_onWidthChanged);
     on<UpdateProductHeightEvent>(_onHeightChanged);
+    on<UpdateProductImageEvent>(_onImageChanged);
     on<UpdateProductSubmittedEvent>(_onSubmitted);
   }
 
@@ -74,11 +80,50 @@ class UpdateProductBloc extends Bloc<UpdateProductEvent, UpdateProductState>
     emit(state.copyWith(height: value));
   }
 
+  void _onImageChanged(
+      UpdateProductImageEvent event, Emitter<UpdateProductState> emit) {
+    emit.call(state.copyWith(image: event.image));
+  }
+
   Future<void> _onSubmitted(UpdateProductSubmittedEvent event,
       Emitter<UpdateProductState> emit) async {
-    final product = Product(
+    emit.call(state.copyWith(status: UpdateProductStatus.loading));
+    try {
+      final uploadedImageName = await _uploadImage();
+      final product = _getProductToUpdate(uploadedImageName);
+      await _updateProductUsecase(product);
+      emit.call(state.copyWith(status: UpdateProductStatus.success));
+    } on InvalidProductImageFailure {
+      _onError(emit, 'Invalid image');
+    } on InvalidProductFailure {
+      _onError(emit, 'Invalid product');
+    } catch (error) {
+      _onError(emit, 'Fail trying to update Product');
+    }
+  }
+
+  Future<String?> _uploadImage() async {
+    if (state.image == null) {
+      return null;
+    }
+
+    //**
+    //* If want to save space should delete the old files
+    //* or maybe save the images with the same name and type
+    // */
+    final toUpload = await _renameFile();
+    await _uploadProductImageUsecase(toUpload);
+    return toUpload.getFileName();
+  }
+
+  Future<File> _renameFile() async {
+    final newImageName = DateTime.now().millisecondsSinceEpoch.toString();
+    return await state.image!.changeFileName(newImageName);
+  }
+
+  Product _getProductToUpdate(String? fileName) {
+    return Product(
       id: state.initialProduct!.id,
-      filename: state.initialProduct!.filename,
       createdAt: state.initialProduct!.createdAt,
       title: state.title,
       type: state.type,
@@ -87,14 +132,13 @@ class UpdateProductBloc extends Bloc<UpdateProductEvent, UpdateProductState>
       width: state.width,
       height: state.height,
       description: state.description,
+      filename: fileName ?? state.initialProduct!.filename,
     );
+  }
 
-    try {
-      await _updateProductUsecase(product);
-      emit.call(state.copyWith(status: UpdateProductStatus.success));
-    } catch (error) {
-      emit.call(state.copyWith(status: UpdateProductStatus.error));
-      emit.call(state.copyWith(status: UpdateProductStatus.update));
-    }
+  void _onError(Emitter<UpdateProductState> emit, String message) {
+    emit.call(
+        state.copyWith(status: UpdateProductStatus.error, message: message));
+    emit.call(state.copyWith(status: UpdateProductStatus.update));
   }
 }

@@ -1,10 +1,12 @@
 part of 'update_product_bloc.dart';
 
-enum UpdateProductStatus { success, error, update }
+enum UpdateProductStatus { success, error, update, loading }
 
 class UpdateProductState extends Equatable {
   final UpdateProductStatus status;
   final Product? initialProduct;
+  final File? image;
+  final String? message;
   final String title;
   final String description;
   final String type;
@@ -23,7 +25,18 @@ class UpdateProductState extends Equatable {
     this.rating = 0,
     this.width = 0,
     this.height = 0,
+    this.image,
+    this.message,
   });
+
+  T when<T>({
+    T Function(UpdateProductState state)? onState,
+    T Function()? onLoading,
+  }) {
+    return status == UpdateProductStatus.loading
+        ? onLoading!()
+        : onState!(this);
+  }
 
   UpdateProductState copyWith({
     Product? initialProduct,
@@ -38,6 +51,8 @@ class UpdateProductState extends Equatable {
     double? rating,
     DateTime? createdAt,
     DateTime? updatedAt,
+    File? image,
+    String? message,
   }) {
     return UpdateProductState(
       initialProduct: initialProduct ?? this.initialProduct,
@@ -49,6 +64,8 @@ class UpdateProductState extends Equatable {
       width: width ?? this.width,
       price: price ?? this.price,
       rating: rating ?? this.rating,
+      image: image ?? this.image,
+      message: message,
     );
   }
 

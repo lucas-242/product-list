@@ -8,7 +8,8 @@ import '../../mock_products_test.dart';
 
 void main() {
   final database = FakeFirebaseFirestore();
-  final datasource = FirebaseProductsDatasource(database);
+  final storage = FirebaseStorageTest();
+  final datasource = FirebaseProductsDatasource(database, storage);
 
   Future<void> _generateProductsMock() async {
     for (var product in productList) {

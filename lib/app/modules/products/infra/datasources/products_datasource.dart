@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
 
 abstract class ProductsDatasource {
@@ -5,4 +7,5 @@ abstract class ProductsDatasource {
   Future<void> createProducts(List<ProductModel> products);
   Future<void> deleteProduct(String id);
   Future<void> updateProduct(ProductModel product);
+  Future<void> uploadProductImage(File image);
 }

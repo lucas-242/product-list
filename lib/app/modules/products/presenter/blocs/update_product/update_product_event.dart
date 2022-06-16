@@ -71,3 +71,8 @@ class UpdateProductHeightEvent extends UpdateProductEvent {
 }
 
 class UpdateProductSubmittedEvent extends UpdateProductEvent {}
+
+class UpdateProductImageEvent extends UpdateProductEvent {
+  final File image;
+  const UpdateProductImageEvent(this.image);
+}

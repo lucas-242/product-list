@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
@@ -22,19 +23,19 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<void> updateProduct(Product product) {
+  Future<void> updateProduct(Product product) async {
     try {
       var toUpdate = ProductModel.fromProduct(product);
-      return datasource.updateProduct(toUpdate);
+      return await datasource.updateProduct(toUpdate);
     } catch (e) {
       throw ProductsFailure('Error to update product');
     }
   }
 
   @override
-  Future<void> deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
     try {
-      return datasource.deleteProduct(id);
+      return await datasource.deleteProduct(id);
     } catch (e) {
       throw ProductsFailure('Error to delete product');
     }
@@ -44,7 +45,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<void> createProducts() async {
     try {
       final data = await _getProducts();
-      return datasource.createProducts(data);
+      return await datasource.createProducts(data);
     } catch (e) {
       throw ProductsFailure('Error to delete product');
     }
@@ -56,5 +57,14 @@ class ProductsRepositoryImpl implements ProductsRepository {
     final data = await json.decode(response) as List;
     final result = data.map((e) => ProductModel.fromMap(e)).toList();
     return result;
+  }
+
+  @override
+  Future<void> uploadProductImage(File image) async {
+    try {
+      return await datasource.uploadProductImage(image);
+    } catch (error) {
+      throw ProductsFailure('Error to upload product image');
+    }
   }
 }

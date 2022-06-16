@@ -4,6 +4,7 @@ import 'package:product_list/app/modules/products/domain/usecases/create_product
 import 'package:product_list/app/modules/products/domain/usecases/delete_product.dart';
 import 'package:product_list/app/modules/products/domain/usecases/get_products.dart';
 import 'package:product_list/app/modules/products/domain/usecases/update_product.dart';
+import 'package:product_list/app/modules/products/domain/usecases/upload_product_image.dart';
 import 'package:product_list/app/modules/products/external/firebase/firebase_products_datasource_impl.dart';
 import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/repositories/products_repository_impl.dart';
@@ -20,7 +21,7 @@ Future<void> init() async {
 
 void _initDatasources() {
   instance.registerFactory<ProductsDatasource>(
-      () => FirebaseProductsDatasource(instance()));
+      () => FirebaseProductsDatasource(instance(), instance()));
 }
 
 void _initRepositories() {
@@ -34,6 +35,8 @@ void _initUsecases() {
       .registerFactory<CreateProducts>(() => CreateProductsImpl(instance()));
   instance.registerFactory<UpdateProduct>(() => UpdateProductImpl(instance()));
   instance.registerFactory<DeleteProduct>(() => DeleteProductImpl(instance()));
+  instance.registerFactory<UploadProductImage>(
+      () => UploadProductImageImpl(instance()));
 }
 
 void _initBlocs() {

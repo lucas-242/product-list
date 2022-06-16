@@ -1,21 +1,26 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
 import 'package:product_list/app/modules/products/external/firebase/constants/firebase_constants.dart';
 import 'package:product_list/app/modules/products/external/firebase/models/product_firebase_model.dart';
 import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
+import 'package:product_list/app/shared/extensions/extensions.dart';
 
 class FirebaseProductsDatasource implements ProductsDatasource {
   final FirebaseFirestore _firestore;
+  final FirebaseStorage _storage;
 
-  FirebaseProductsDatasource(this._firestore);
+  FirebaseProductsDatasource(this._firestore, this._storage);
 
   @override
   Stream<List<ProductModel>> getProducts() {
     try {
       Stream<QuerySnapshot> snapshots =
           _firestore.collection(FirebaseConstants.productsTable).snapshots();
-      var result = _querySnapshotToProductModel(snapshots);
+      final result = _querySnapshotToProductModel(snapshots);
       return result;
     } catch (e) {
       throw ProductsFailure('Error to get products from firebase');
@@ -32,15 +37,15 @@ class FirebaseProductsDatasource implements ProductsDatasource {
   }
 
   ProductModel _documentSnapshotToProductModel(DocumentSnapshot snapshot) {
-    var data = snapshot.data() as Map<String, dynamic>;
-    var result = ProductFirebaseModel.fromMap(data);
+    final data = snapshot.data() as Map<String, dynamic>;
+    final result = ProductFirebaseModel.fromMap(data);
     return result.copyWith(id: snapshot.id);
   }
 
   @override
   Future<void> updateProduct(ProductModel product) async {
     try {
-      var toUpdate = ProductFirebaseModel.fromProductModel(product);
+      final toUpdate = ProductFirebaseModel.fromProductModel(product);
       await _firestore
           .collection(FirebaseConstants.productsTable)
           .doc(product.id)
@@ -66,15 +71,26 @@ class FirebaseProductsDatasource implements ProductsDatasource {
   Future<void> createProducts(List<ProductModel> products) async {
     try {
       for (var product in products) {
-        var toCreate = ProductFirebaseModel.fromProductModel(product);
+        final toCreate = ProductFirebaseModel.fromProductModel(product);
         await _firestore
             .collection(FirebaseConstants.productsTable)
             .add(toCreate.toMap());
       }
     } catch (e) {
-      throw ProductsFailure('Error to add products');
+      throw ProductsFailure('Error to add products in firebase');
     }
   }
 
-  // TODO: implement upload of images
+  @override
+  Future<void> uploadProductImage(File image) async {
+    try {
+      await _storage
+          .ref()
+          .child(FirebaseConstants.productsStorage)
+          .child(image.getFileName())
+          .putFile(image);
+    } catch (e) {
+      throw ProductsFailure('Error to upload product image in firebase');
+    }
+  }
 }
