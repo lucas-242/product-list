@@ -7,6 +7,7 @@ import 'package:product_list/app/modules/products/external/firebase/constants/fi
 import 'package:product_list/app/modules/products/external/firebase/models/product_firebase_model.dart';
 import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
+import 'package:product_list/app/shared/extensions/extensions.dart';
 
 class FirebaseProductsDatasource implements ProductsDatasource {
   final FirebaseFirestore _firestore;
@@ -83,7 +84,11 @@ class FirebaseProductsDatasource implements ProductsDatasource {
   @override
   Future<void> uploadProductImage(File image) async {
     try {
-      await _storage.ref(FirebaseConstants.productImagesBucket).putFile(image);
+      await _storage
+          .ref()
+          .child(FirebaseConstants.productsStorage)
+          .child(image.getFileName())
+          .putFile(image);
     } catch (e) {
       throw ProductsFailure('Error to upload product image in firebase');
     }

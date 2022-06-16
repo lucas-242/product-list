@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:mime/mime.dart';
-import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/domain/errors/products_errors.dart';
 import 'package:product_list/app/modules/products/domain/repositories/products_repository.dart';
 

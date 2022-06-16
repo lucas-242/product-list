@@ -30,7 +30,7 @@ class _ProductsPageState extends State<ProductsPage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const AppTitle(title: 'Products'),
             Expanded(
