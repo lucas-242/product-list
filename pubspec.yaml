@@ -25,6 +25,7 @@ dependencies:
   firebase_storage: ^10.2.17
 
 dev_dependencies:
+  bloc_test: ^9.0.3
   build_runner: ^2.1.10
   fake_cloud_firestore: ^1.2.2
   flutter_test:

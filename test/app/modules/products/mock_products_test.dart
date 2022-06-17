@@ -1,10 +1,15 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/domain/repositories/products_repository.dart';
+import 'package:product_list/app/modules/products/domain/usecases/create_products.dart';
+import 'package:product_list/app/modules/products/domain/usecases/delete_product.dart';
+import 'package:product_list/app/modules/products/domain/usecases/get_products.dart';
 import 'package:product_list/app/modules/products/infra/datasources/products_datasource.dart';
 import 'package:product_list/app/modules/products/infra/models/product_model.dart';
+import 'package:product_list/app/modules/products/presenter/blocs/products/products_bloc.dart';
 
 class FirebaseStorageTest extends Mock implements FirebaseStorage {}
 
@@ -14,11 +19,22 @@ class ProductsDatasourceTest extends Mock implements ProductsDatasource {}
 
 class StreamProductsTest extends Mock implements Stream<List<ProductModel>> {}
 
+class TestProductsBloc extends MockBloc<ProductsEvent, ProductsState>
+    implements ProductsBloc {}
+
+// class TestProductsBloc extends Mock implements ProductsBloc {}
+
+class TestGetProducts extends Mock implements GetProducts {}
+
+class TestDeleteProduct extends Mock implements DeleteProduct {}
+
+class TestCreateProducts extends Mock implements CreateProducts {}
+
 Product get product => Product(
       id: 'test',
       title: 'Avocado',
       type: 'fruit',
-      filename: 'test.png',
+      filename: '',
       price: 8.7,
       description: 'Test description',
       height: 50,
@@ -30,7 +46,7 @@ Product get invalidProduct => Product(
       id: 'test',
       title: 'test',
       type: 'test',
-      filename: 'test.png',
+      filename: '',
       price: 0,
     );
 
@@ -38,7 +54,7 @@ ProductModel get productModel => ProductModel(
       id: 'test',
       title: 'Avocado',
       type: 'fruit',
-      filename: 'test.png',
+      filename: '',
       price: 8.7,
       description: 'Test description',
       height: 50,
@@ -53,5 +69,9 @@ List<ProductModel> get productList =>
   ProductsRepositoryTest,
   StreamProductsTest,
   ProductsDatasourceTest,
+  TestProductsBloc,
+  TestGetProducts,
+  TestDeleteProduct,
+  TestCreateProducts,
 ])
 void main() {}

@@ -3,15 +3,18 @@
 // Do not manually edit this file.
 
 import 'dart:async' as _i2;
-import 'dart:io' as _i5;
+import 'dart:io' as _i6;
 
+import 'package:bloc/bloc.dart' as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:product_list/app/modules/products/domain/entities/product.dart'
-    as _i4;
+    as _i5;
 import 'package:product_list/app/modules/products/infra/models/product_model.dart'
-    as _i6;
+    as _i7;
+import 'package:product_list/app/modules/products/presenter/blocs/products/products_bloc.dart'
+    as _i3;
 
-import 'mock_products_test.dart' as _i3;
+import 'mock_products_test.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -26,20 +29,22 @@ import 'mock_products_test.dart' as _i3;
 class _FakeStreamSubscription_0<T> extends _i1.Fake
     implements _i2.StreamSubscription<T> {}
 
+class _FakeProductsState_1 extends _i1.Fake implements _i3.ProductsState {}
+
 /// A class which mocks [ProductsRepositoryTest].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockProductsRepositoryTest extends _i1.Mock
-    implements _i3.ProductsRepositoryTest {
+    implements _i4.ProductsRepositoryTest {
   MockProductsRepositoryTest() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.Stream<List<_i4.Product>> getProducts() =>
+  _i2.Stream<List<_i5.Product>> getProducts() =>
       (super.noSuchMethod(Invocation.method(#getProducts, []),
-              returnValue: Stream<List<_i4.Product>>.empty())
-          as _i2.Stream<List<_i4.Product>>);
+              returnValue: Stream<List<_i5.Product>>.empty())
+          as _i2.Stream<List<_i5.Product>>);
   @override
   _i2.Future<void> createProducts() =>
       (super.noSuchMethod(Invocation.method(#createProducts, []),
@@ -51,12 +56,12 @@ class MockProductsRepositoryTest extends _i1.Mock
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
   @override
-  _i2.Future<void> updateProduct(_i4.Product? product) =>
+  _i2.Future<void> updateProduct(_i5.Product? product) =>
       (super.noSuchMethod(Invocation.method(#updateProduct, [product]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
   @override
-  _i2.Future<void> uploadProductImage(_i5.File? image) =>
+  _i2.Future<void> uploadProductImage(_i6.File? image) =>
       (super.noSuchMethod(Invocation.method(#uploadProductImage, [image]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
@@ -66,7 +71,7 @@ class MockProductsRepositoryTest extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStreamProductsTest extends _i1.Mock
-    implements _i3.StreamProductsTest {
+    implements _i4.StreamProductsTest {
   MockStreamProductsTest() {
     _i1.throwOnMissingStub(this);
   }
@@ -83,37 +88,37 @@ class MockStreamProductsTest extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#isEmpty),
           returnValue: Future<bool>.value(false)) as _i2.Future<bool>);
   @override
-  _i2.Future<List<_i6.ProductModel>> get first =>
+  _i2.Future<List<_i7.ProductModel>> get first =>
       (super.noSuchMethod(Invocation.getter(#first),
               returnValue:
-                  Future<List<_i6.ProductModel>>.value(<_i6.ProductModel>[]))
-          as _i2.Future<List<_i6.ProductModel>>);
+                  Future<List<_i7.ProductModel>>.value(<_i7.ProductModel>[]))
+          as _i2.Future<List<_i7.ProductModel>>);
   @override
-  _i2.Future<List<_i6.ProductModel>> get last =>
+  _i2.Future<List<_i7.ProductModel>> get last =>
       (super.noSuchMethod(Invocation.getter(#last),
               returnValue:
-                  Future<List<_i6.ProductModel>>.value(<_i6.ProductModel>[]))
-          as _i2.Future<List<_i6.ProductModel>>);
+                  Future<List<_i7.ProductModel>>.value(<_i7.ProductModel>[]))
+          as _i2.Future<List<_i7.ProductModel>>);
   @override
-  _i2.Future<List<_i6.ProductModel>> get single =>
+  _i2.Future<List<_i7.ProductModel>> get single =>
       (super.noSuchMethod(Invocation.getter(#single),
               returnValue:
-                  Future<List<_i6.ProductModel>>.value(<_i6.ProductModel>[]))
-          as _i2.Future<List<_i6.ProductModel>>);
+                  Future<List<_i7.ProductModel>>.value(<_i7.ProductModel>[]))
+          as _i2.Future<List<_i7.ProductModel>>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> asBroadcastStream(
-          {void Function(_i2.StreamSubscription<List<_i6.ProductModel>>)?
+  _i2.Stream<List<_i7.ProductModel>> asBroadcastStream(
+          {void Function(_i2.StreamSubscription<List<_i7.ProductModel>>)?
               onListen,
-          void Function(_i2.StreamSubscription<List<_i6.ProductModel>>)?
+          void Function(_i2.StreamSubscription<List<_i7.ProductModel>>)?
               onCancel}) =>
       (super.noSuchMethod(
               Invocation.method(#asBroadcastStream, [],
                   {#onListen: onListen, #onCancel: onCancel}),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
-  _i2.StreamSubscription<List<_i6.ProductModel>> listen(
-          void Function(List<_i6.ProductModel>)? onData,
+  _i2.StreamSubscription<List<_i7.ProductModel>> listen(
+          void Function(List<_i7.ProductModel>)? onData,
           {Function? onError,
           void Function()? onDone,
           bool? cancelOnError}) =>
@@ -125,63 +130,63 @@ class MockStreamProductsTest extends _i1.Mock
                 #onDone: onDone,
                 #cancelOnError: cancelOnError
               }),
-              returnValue: _FakeStreamSubscription_0<List<_i6.ProductModel>>())
-          as _i2.StreamSubscription<List<_i6.ProductModel>>);
+              returnValue: _FakeStreamSubscription_0<List<_i7.ProductModel>>())
+          as _i2.StreamSubscription<List<_i7.ProductModel>>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> where(
-          bool Function(List<_i6.ProductModel>)? test) =>
+  _i2.Stream<List<_i7.ProductModel>> where(
+          bool Function(List<_i7.ProductModel>)? test) =>
       (super.noSuchMethod(Invocation.method(#where, [test]),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
-  _i2.Stream<S> map<S>(S Function(List<_i6.ProductModel>)? convert) =>
+  _i2.Stream<S> map<S>(S Function(List<_i7.ProductModel>)? convert) =>
       (super.noSuchMethod(Invocation.method(#map, [convert]),
           returnValue: Stream<S>.empty()) as _i2.Stream<S>);
   @override
   _i2.Stream<E> asyncMap<E>(
-          _i2.FutureOr<E> Function(List<_i6.ProductModel>)? convert) =>
+          _i2.FutureOr<E> Function(List<_i7.ProductModel>)? convert) =>
       (super.noSuchMethod(Invocation.method(#asyncMap, [convert]),
           returnValue: Stream<E>.empty()) as _i2.Stream<E>);
   @override
   _i2.Stream<E> asyncExpand<E>(
-          _i2.Stream<E>? Function(List<_i6.ProductModel>)? convert) =>
+          _i2.Stream<E>? Function(List<_i7.ProductModel>)? convert) =>
       (super.noSuchMethod(Invocation.method(#asyncExpand, [convert]),
           returnValue: Stream<E>.empty()) as _i2.Stream<E>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> handleError(Function? onError,
+  _i2.Stream<List<_i7.ProductModel>> handleError(Function? onError,
           {bool Function(dynamic)? test}) =>
       (super.noSuchMethod(
               Invocation.method(#handleError, [onError], {#test: test}),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
   _i2.Stream<S> expand<S>(
-          Iterable<S> Function(List<_i6.ProductModel>)? convert) =>
+          Iterable<S> Function(List<_i7.ProductModel>)? convert) =>
       (super.noSuchMethod(Invocation.method(#expand, [convert]),
           returnValue: Stream<S>.empty()) as _i2.Stream<S>);
   @override
   _i2.Future<dynamic> pipe(
-          _i2.StreamConsumer<List<_i6.ProductModel>>? streamConsumer) =>
+          _i2.StreamConsumer<List<_i7.ProductModel>>? streamConsumer) =>
       (super.noSuchMethod(Invocation.method(#pipe, [streamConsumer]),
           returnValue: Future<dynamic>.value()) as _i2.Future<dynamic>);
   @override
   _i2.Stream<S> transform<S>(
-          _i2.StreamTransformer<List<_i6.ProductModel>, S>?
+          _i2.StreamTransformer<List<_i7.ProductModel>, S>?
               streamTransformer) =>
       (super.noSuchMethod(Invocation.method(#transform, [streamTransformer]),
           returnValue: Stream<S>.empty()) as _i2.Stream<S>);
   @override
-  _i2.Future<List<_i6.ProductModel>> reduce(
-          List<_i6.ProductModel> Function(
-                  List<_i6.ProductModel>, List<_i6.ProductModel>)?
+  _i2.Future<List<_i7.ProductModel>> reduce(
+          List<_i7.ProductModel> Function(
+                  List<_i7.ProductModel>, List<_i7.ProductModel>)?
               combine) =>
       (super.noSuchMethod(Invocation.method(#reduce, [combine]),
               returnValue:
-                  Future<List<_i6.ProductModel>>.value(<_i6.ProductModel>[]))
-          as _i2.Future<List<_i6.ProductModel>>);
+                  Future<List<_i7.ProductModel>>.value(<_i7.ProductModel>[]))
+          as _i2.Future<List<_i7.ProductModel>>);
   @override
   _i2.Future<S> fold<S>(
-          S? initialValue, S Function(S, List<_i6.ProductModel>)? combine) =>
+          S? initialValue, S Function(S, List<_i7.ProductModel>)? combine) =>
       (super.noSuchMethod(Invocation.method(#fold, [initialValue, combine]),
           returnValue: Future<S>.value(null)) as _i2.Future<S>);
   @override
@@ -193,123 +198,123 @@ class MockStreamProductsTest extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#contains, [needle]),
           returnValue: Future<bool>.value(false)) as _i2.Future<bool>);
   @override
-  _i2.Future<dynamic> forEach(void Function(List<_i6.ProductModel>)? action) =>
+  _i2.Future<dynamic> forEach(void Function(List<_i7.ProductModel>)? action) =>
       (super.noSuchMethod(Invocation.method(#forEach, [action]),
           returnValue: Future<dynamic>.value()) as _i2.Future<dynamic>);
   @override
-  _i2.Future<bool> every(bool Function(List<_i6.ProductModel>)? test) =>
+  _i2.Future<bool> every(bool Function(List<_i7.ProductModel>)? test) =>
       (super.noSuchMethod(Invocation.method(#every, [test]),
           returnValue: Future<bool>.value(false)) as _i2.Future<bool>);
   @override
-  _i2.Future<bool> any(bool Function(List<_i6.ProductModel>)? test) =>
+  _i2.Future<bool> any(bool Function(List<_i7.ProductModel>)? test) =>
       (super.noSuchMethod(Invocation.method(#any, [test]),
           returnValue: Future<bool>.value(false)) as _i2.Future<bool>);
   @override
   _i2.Stream<R> cast<R>() => (super.noSuchMethod(Invocation.method(#cast, []),
       returnValue: Stream<R>.empty()) as _i2.Stream<R>);
   @override
-  _i2.Future<List<List<_i6.ProductModel>>> toList() =>
+  _i2.Future<List<List<_i7.ProductModel>>> toList() =>
       (super.noSuchMethod(Invocation.method(#toList, []),
-              returnValue: Future<List<List<_i6.ProductModel>>>.value(
-                  <List<_i6.ProductModel>>[]))
-          as _i2.Future<List<List<_i6.ProductModel>>>);
+              returnValue: Future<List<List<_i7.ProductModel>>>.value(
+                  <List<_i7.ProductModel>>[]))
+          as _i2.Future<List<List<_i7.ProductModel>>>);
   @override
-  _i2.Future<Set<List<_i6.ProductModel>>> toSet() =>
+  _i2.Future<Set<List<_i7.ProductModel>>> toSet() =>
       (super.noSuchMethod(Invocation.method(#toSet, []),
-              returnValue: Future<Set<List<_i6.ProductModel>>>.value(
-                  <List<_i6.ProductModel>>{}))
-          as _i2.Future<Set<List<_i6.ProductModel>>>);
+              returnValue: Future<Set<List<_i7.ProductModel>>>.value(
+                  <List<_i7.ProductModel>>{}))
+          as _i2.Future<Set<List<_i7.ProductModel>>>);
   @override
   _i2.Future<E> drain<E>([E? futureValue]) =>
       (super.noSuchMethod(Invocation.method(#drain, [futureValue]),
           returnValue: Future<E>.value(null)) as _i2.Future<E>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> take(int? count) =>
+  _i2.Stream<List<_i7.ProductModel>> take(int? count) =>
       (super.noSuchMethod(Invocation.method(#take, [count]),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> takeWhile(
-          bool Function(List<_i6.ProductModel>)? test) =>
+  _i2.Stream<List<_i7.ProductModel>> takeWhile(
+          bool Function(List<_i7.ProductModel>)? test) =>
       (super.noSuchMethod(Invocation.method(#takeWhile, [test]),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> skip(int? count) =>
+  _i2.Stream<List<_i7.ProductModel>> skip(int? count) =>
       (super.noSuchMethod(Invocation.method(#skip, [count]),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> skipWhile(
-          bool Function(List<_i6.ProductModel>)? test) =>
+  _i2.Stream<List<_i7.ProductModel>> skipWhile(
+          bool Function(List<_i7.ProductModel>)? test) =>
       (super.noSuchMethod(Invocation.method(#skipWhile, [test]),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> distinct(
-          [bool Function(List<_i6.ProductModel>, List<_i6.ProductModel>)?
+  _i2.Stream<List<_i7.ProductModel>> distinct(
+          [bool Function(List<_i7.ProductModel>, List<_i7.ProductModel>)?
               equals]) =>
       (super.noSuchMethod(Invocation.method(#distinct, [equals]),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
-  _i2.Future<List<_i6.ProductModel>> firstWhere(
-          bool Function(List<_i6.ProductModel>)? test,
-          {List<_i6.ProductModel> Function()? orElse}) =>
+  _i2.Future<List<_i7.ProductModel>> firstWhere(
+          bool Function(List<_i7.ProductModel>)? test,
+          {List<_i7.ProductModel> Function()? orElse}) =>
       (super.noSuchMethod(
               Invocation.method(#firstWhere, [test], {#orElse: orElse}),
               returnValue:
-                  Future<List<_i6.ProductModel>>.value(<_i6.ProductModel>[]))
-          as _i2.Future<List<_i6.ProductModel>>);
+                  Future<List<_i7.ProductModel>>.value(<_i7.ProductModel>[]))
+          as _i2.Future<List<_i7.ProductModel>>);
   @override
-  _i2.Future<List<_i6.ProductModel>> lastWhere(
-          bool Function(List<_i6.ProductModel>)? test,
-          {List<_i6.ProductModel> Function()? orElse}) =>
+  _i2.Future<List<_i7.ProductModel>> lastWhere(
+          bool Function(List<_i7.ProductModel>)? test,
+          {List<_i7.ProductModel> Function()? orElse}) =>
       (super.noSuchMethod(
               Invocation.method(#lastWhere, [test], {#orElse: orElse}),
               returnValue:
-                  Future<List<_i6.ProductModel>>.value(<_i6.ProductModel>[]))
-          as _i2.Future<List<_i6.ProductModel>>);
+                  Future<List<_i7.ProductModel>>.value(<_i7.ProductModel>[]))
+          as _i2.Future<List<_i7.ProductModel>>);
   @override
-  _i2.Future<List<_i6.ProductModel>> singleWhere(
-          bool Function(List<_i6.ProductModel>)? test,
-          {List<_i6.ProductModel> Function()? orElse}) =>
+  _i2.Future<List<_i7.ProductModel>> singleWhere(
+          bool Function(List<_i7.ProductModel>)? test,
+          {List<_i7.ProductModel> Function()? orElse}) =>
       (super.noSuchMethod(
               Invocation.method(#singleWhere, [test], {#orElse: orElse}),
               returnValue:
-                  Future<List<_i6.ProductModel>>.value(<_i6.ProductModel>[]))
-          as _i2.Future<List<_i6.ProductModel>>);
+                  Future<List<_i7.ProductModel>>.value(<_i7.ProductModel>[]))
+          as _i2.Future<List<_i7.ProductModel>>);
   @override
-  _i2.Future<List<_i6.ProductModel>> elementAt(int? index) =>
+  _i2.Future<List<_i7.ProductModel>> elementAt(int? index) =>
       (super.noSuchMethod(Invocation.method(#elementAt, [index]),
               returnValue:
-                  Future<List<_i6.ProductModel>>.value(<_i6.ProductModel>[]))
-          as _i2.Future<List<_i6.ProductModel>>);
+                  Future<List<_i7.ProductModel>>.value(<_i7.ProductModel>[]))
+          as _i2.Future<List<_i7.ProductModel>>);
   @override
-  _i2.Stream<List<_i6.ProductModel>> timeout(Duration? timeLimit,
-          {void Function(_i2.EventSink<List<_i6.ProductModel>>)? onTimeout}) =>
+  _i2.Stream<List<_i7.ProductModel>> timeout(Duration? timeLimit,
+          {void Function(_i2.EventSink<List<_i7.ProductModel>>)? onTimeout}) =>
       (super.noSuchMethod(
               Invocation.method(#timeout, [timeLimit], {#onTimeout: onTimeout}),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
 }
 
 /// A class which mocks [ProductsDatasourceTest].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockProductsDatasourceTest extends _i1.Mock
-    implements _i3.ProductsDatasourceTest {
+    implements _i4.ProductsDatasourceTest {
   MockProductsDatasourceTest() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.Stream<List<_i6.ProductModel>> getProducts() =>
+  _i2.Stream<List<_i7.ProductModel>> getProducts() =>
       (super.noSuchMethod(Invocation.method(#getProducts, []),
-              returnValue: Stream<List<_i6.ProductModel>>.empty())
-          as _i2.Stream<List<_i6.ProductModel>>);
+              returnValue: Stream<List<_i7.ProductModel>>.empty())
+          as _i2.Stream<List<_i7.ProductModel>>);
   @override
-  _i2.Future<void> createProducts(List<_i6.ProductModel>? products) =>
+  _i2.Future<void> createProducts(List<_i7.ProductModel>? products) =>
       (super.noSuchMethod(Invocation.method(#createProducts, [products]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
@@ -319,13 +324,120 @@ class MockProductsDatasourceTest extends _i1.Mock
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
   @override
-  _i2.Future<void> updateProduct(_i6.ProductModel? product) =>
+  _i2.Future<void> updateProduct(_i7.ProductModel? product) =>
       (super.noSuchMethod(Invocation.method(#updateProduct, [product]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
   @override
-  _i2.Future<void> uploadProductImage(_i5.File? image) =>
+  _i2.Future<void> uploadProductImage(_i6.File? image) =>
       (super.noSuchMethod(Invocation.method(#uploadProductImage, [image]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
+}
+
+/// A class which mocks [TestProductsBloc].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTestProductsBloc extends _i1.Mock implements _i4.TestProductsBloc {
+  MockTestProductsBloc() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.ProductsState get state => (super.noSuchMethod(Invocation.getter(#state),
+      returnValue: _FakeProductsState_1()) as _i3.ProductsState);
+  @override
+  _i2.Stream<_i3.ProductsState> get stream =>
+      (super.noSuchMethod(Invocation.getter(#stream),
+              returnValue: Stream<_i3.ProductsState>.empty())
+          as _i2.Stream<_i3.ProductsState>);
+  @override
+  bool get isClosed =>
+      (super.noSuchMethod(Invocation.getter(#isClosed), returnValue: false)
+          as bool);
+  @override
+  void emit(_i3.ProductsState? state) =>
+      super.noSuchMethod(Invocation.method(#emit, [state]),
+          returnValueForMissingStub: null);
+  @override
+  void onChange(_i8.Change<_i3.ProductsState>? change) =>
+      super.noSuchMethod(Invocation.method(#onChange, [change]),
+          returnValueForMissingStub: null);
+  @override
+  void addError(Object? error, [StackTrace? stackTrace]) =>
+      super.noSuchMethod(Invocation.method(#addError, [error, stackTrace]),
+          returnValueForMissingStub: null);
+  @override
+  void onError(Object? error, StackTrace? stackTrace) =>
+      super.noSuchMethod(Invocation.method(#onError, [error, stackTrace]),
+          returnValueForMissingStub: null);
+  @override
+  _i2.Future<void> close() => (super.noSuchMethod(Invocation.method(#close, []),
+      returnValue: Future<void>.value(),
+      returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
+  @override
+  void add(_i3.ProductsEvent? event) =>
+      super.noSuchMethod(Invocation.method(#add, [event]),
+          returnValueForMissingStub: null);
+  @override
+  void onEvent(_i3.ProductsEvent? event) =>
+      super.noSuchMethod(Invocation.method(#onEvent, [event]),
+          returnValueForMissingStub: null);
+  @override
+  void on<E extends _i3.ProductsEvent>(
+          _i8.EventHandler<E, _i3.ProductsState>? handler,
+          {_i8.EventTransformer<E>? transformer}) =>
+      super.noSuchMethod(
+          Invocation.method(#on, [handler], {#transformer: transformer}),
+          returnValueForMissingStub: null);
+  @override
+  void onTransition(
+          _i8.Transition<_i3.ProductsEvent, _i3.ProductsState>? transition) =>
+      super.noSuchMethod(Invocation.method(#onTransition, [transition]),
+          returnValueForMissingStub: null);
+}
+
+/// A class which mocks [TestGetProducts].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTestGetProducts extends _i1.Mock implements _i4.TestGetProducts {
+  MockTestGetProducts() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.Stream<List<_i5.Product>> call() =>
+      (super.noSuchMethod(Invocation.method(#call, []),
+              returnValue: Stream<List<_i5.Product>>.empty())
+          as _i2.Stream<List<_i5.Product>>);
+}
+
+/// A class which mocks [TestDeleteProduct].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTestDeleteProduct extends _i1.Mock implements _i4.TestDeleteProduct {
+  MockTestDeleteProduct() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.Future<void> call(String? id) =>
+      (super.noSuchMethod(Invocation.method(#call, [id]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
+}
+
+/// A class which mocks [TestCreateProducts].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTestCreateProducts extends _i1.Mock
+    implements _i4.TestCreateProducts {
+  MockTestCreateProducts() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.Future<void> call() => (super.noSuchMethod(Invocation.method(#call, []),
+      returnValue: Future<void>.value(),
+      returnValueForMissingStub: Future<void>.value()) as _i2.Future<void>);
 }
