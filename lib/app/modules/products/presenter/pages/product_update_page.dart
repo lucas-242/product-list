@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+
 import 'package:product_list/app/modules/products/domain/entities/product.dart';
 import 'package:product_list/app/modules/products/presenter/blocs/update_product/update_product_bloc.dart';
 import 'package:product_list/app/modules/products/presenter/widgets/custom_modal_bottom_sheet.dart';
@@ -39,47 +40,73 @@ class ProductUpdatePage extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AppTitle(title: 'Edit ${bloc.state.initialProduct?.title}'),
-                  BlocListener<UpdateProductBloc, UpdateProductState>(
-                    listener: (context, state) {
-                      if (state.status == UpdateProductStatus.error) {
-                        getAppSnackBar(
-                          context: context,
-                          message: state.message!,
-                          type: SnackBarType.error,
-                        );
-                      } else if (state.status == UpdateProductStatus.success) {
-                        getAppSnackBar(
-                          context: context,
-                          message: 'Product updated successfully',
-                          type: SnackBarType.success,
-                        );
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: Expanded(
-                      child: BlocBuilder<UpdateProductBloc, UpdateProductState>(
-                          builder: (bloc, state) {
-                        return state.when(
-                          onState: (state) => _Form(formKey: _formKey),
-                          onLoading: () =>
-                              const Center(child: CircularProgressIndicator()),
-                        );
-                      }),
-                    ),
-                  ),
-                ],
-              ),
+        child: CustomScrollView(slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppTitle(title: 'Edit ${bloc.state.initialProduct?.title}'),
+                BlocListener<UpdateProductBloc, UpdateProductState>(
+                  listener: (context, state) {
+                    if (state.status == UpdateProductStatus.error) {
+                      getAppSnackBar(
+                        context: context,
+                        message: state.message!,
+                        type: SnackBarType.error,
+                      );
+                    } else if (state.status == UpdateProductStatus.success) {
+                      getAppSnackBar(
+                        context: context,
+                        message: 'Product updated successfully',
+                        type: SnackBarType.success,
+                      );
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: _BuildScreen(formKey: _formKey),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+class _BuildScreen extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+
+  const _BuildScreen({required this.formKey});
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          BlocBuilder<UpdateProductBloc, UpdateProductState>(
+            buildWhen: (previous, current) =>
+                (current.image != null && previous.image != current.image) ||
+                current.status != UpdateProductStatus.update,
+            builder: (bloc, state) {
+              if (state.status == UpdateProductStatus.loading) {
+                return Container();
+              }
+              return _ImagePicker();
+            },
+          ),
+          Expanded(
+            child: BlocBuilder<UpdateProductBloc, UpdateProductState>(
+                builder: (bloc, state) {
+              return state.when(
+                onState: (state) => _Form(formKey: formKey),
+                onLoading: () =>
+                    const Center(child: CircularProgressIndicator()),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }
@@ -106,7 +133,6 @@ class _Form extends StatelessWidget {
         padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
         child: Column(
           children: [
-            _ImagePicker(),
             const _TitleField(),
             const _TypeField(),
             const _DescriptionField(),
@@ -162,16 +188,13 @@ class _ImagePicker extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: InkWell(
         onTap: () => _showImagePicker(context),
-        child: BlocBuilder<UpdateProductBloc, UpdateProductState>(
-            builder: (bloc, state) {
-          return FirebaseImageSelector(
-            image: state.initialProduct?.filename,
-            file: state.image,
-            height: 140,
-            width: 140,
-            borderRadius: BorderRadius.circular(8.0),
-          );
-        }),
+        child: FirebaseImageSelector(
+          image: bloc.state.initialProduct?.filename,
+          file: bloc.state.image,
+          height: 140,
+          width: 140,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
       ),
     );
   }

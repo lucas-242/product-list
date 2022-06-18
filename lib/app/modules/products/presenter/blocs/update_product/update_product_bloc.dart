@@ -44,45 +44,50 @@ class UpdateProductBloc extends Bloc<UpdateProductEvent, UpdateProductState>
 
   void _onTitleChanged(
       UpdateProductTitleEvent event, Emitter<UpdateProductState> emit) {
-    emit(state.copyWith(title: event.title));
+    emit(
+        state.copyWith(title: event.title, status: UpdateProductStatus.update));
   }
 
   void _onDescriptionChanged(
       UpdateProductDescriptionEvent event, Emitter<UpdateProductState> emit) {
-    emit(state.copyWith(description: event.description));
+    emit(state.copyWith(
+        description: event.description, status: UpdateProductStatus.update));
   }
 
   void _onTypeChanged(
       UpdateProductTypeEvent event, Emitter<UpdateProductState> emit) {
-    emit(state.copyWith(type: event.type));
+    emit(state.copyWith(type: event.type, status: UpdateProductStatus.update));
   }
 
   void _onPriceChanged(
       UpdateProductPriceEvent event, Emitter<UpdateProductState> emit) {
-    emit(state.copyWith(price: double.tryParse(event.price)));
+    emit(state.copyWith(
+        price: double.tryParse(event.price),
+        status: UpdateProductStatus.update));
   }
 
   void _onRatingChanged(
       UpdateProductRatingEvent event, Emitter<UpdateProductState> emit) {
     final value = double.tryParse(event.rating) ?? 0;
-    emit(state.copyWith(rating: value));
+    emit(state.copyWith(rating: value, status: UpdateProductStatus.update));
   }
 
   void _onWidthChanged(
       UpdateProductWidthEvent event, Emitter<UpdateProductState> emit) {
     final value = double.tryParse(event.width) ?? 0;
-    emit(state.copyWith(width: value));
+    emit(state.copyWith(width: value, status: UpdateProductStatus.update));
   }
 
   void _onHeightChanged(
       UpdateProductHeightEvent event, Emitter<UpdateProductState> emit) {
     final value = double.tryParse(event.height) ?? 0;
-    emit(state.copyWith(height: value));
+    emit(state.copyWith(height: value, status: UpdateProductStatus.update));
   }
 
   void _onImageChanged(
       UpdateProductImageEvent event, Emitter<UpdateProductState> emit) {
-    emit.call(state.copyWith(image: event.image));
+    emit.call(
+        state.copyWith(image: event.image, status: UpdateProductStatus.update));
   }
 
   Future<void> _onSubmitted(UpdateProductSubmittedEvent event,
