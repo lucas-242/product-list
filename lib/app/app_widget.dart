@@ -18,7 +18,7 @@ class AppWidget extends StatelessWidget {
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(),
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xf000A31F),
+            seedColor: const Color(0xf000a420),
           ),
           useMaterial3: true,
         ),

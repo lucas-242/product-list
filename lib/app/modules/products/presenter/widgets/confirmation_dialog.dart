@@ -18,6 +18,7 @@ class ConfirmationDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     var colors = Theme.of(context).colorScheme;
     return AlertDialog(
+      key: key ?? const Key('AlertDialog'),
       title: Text("Delete ${product.title}"),
       content: const Text("Would you like to delete this product?"),
       actions: [
