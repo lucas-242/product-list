@@ -76,6 +76,7 @@ class _BuildList extends StatelessWidget {
       itemBuilder: (context, index) {
         var product = bloc.state.products[index];
         return ProductCard(
+            key: Key(product.id),
             product: product,
             onChanged: (option) => _onChangedProductCardOption(
                   context: context,

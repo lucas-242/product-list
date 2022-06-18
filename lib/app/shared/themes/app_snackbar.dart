@@ -15,6 +15,7 @@ ScaffoldFeatureController getAppSnackBar({
 
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      key: const Key("AppSnackbar"),
       content: Text(
         message,
         style: TextStyle(color: textColor),

@@ -28,6 +28,7 @@ class ProductCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
+      key: key,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Padding(
         padding: const EdgeInsets.all(12),

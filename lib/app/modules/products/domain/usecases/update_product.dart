@@ -14,7 +14,6 @@ class UpdateProductImpl implements UpdateProduct {
   @override
   Future<void> call(Product product) async {
     _validateProduct(product);
-    //TODO: usecase should validate if the UI is changing the createdAt property
     return await _updateProduct(product);
   }
 
