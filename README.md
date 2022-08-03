@@ -1,4 +1,3 @@
-Lucas Guimarães, [17/06/2022 17:51]
 # Product List
 
 This is a project to manage products using Firebase, Flutter Bloc and Clean Dart.
